@@ -22,7 +22,7 @@ monitor(void)
 
 	while (true)
 	{
-		printf("K> ");
+		printf(">: ");
 		gets(command_string);
 		tokenize_command(command_string, &argc, argv);
 
@@ -31,7 +31,7 @@ monitor(void)
 			command_handler handler = get_command_handler(argv[0]);
 			if (handler == NULL)
 			{
-				printf("command not found.\n");
+				printf("The handler for %s was not found.\n", argv[0]);
 			}
 			else
 			{

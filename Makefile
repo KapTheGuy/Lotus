@@ -8,10 +8,11 @@ AS = arm-none-eabi-as
 CC = arm-none-eabi-gcc
 LD = arm-none-eabi-ld
 OBJCOPY = arm-none-eabi-objcopy
+OBJDUMP := arm-none-eabi-objdump
 
 # flags
 CFLAGS = -mcpu=$(CPU) -g -I include -marm -ansi -pedantic -Wall -Wextra \
-         -msoft-float -fPIC -mapcs-frame -fno-builtin-printf
+         -msoft-float -fPIC -mapcs-frame -fno-builtin-printf -fno-builtin-strcpy
 ASFLAGS = -mcpu=$(CPU) -g -I include
 QEMU_FLAGS = -M versatilepb -cpu arm926 -m 128M -nographic
 
@@ -25,6 +26,7 @@ all: $(OS).bin
 $(OS).bin: $(OBJS) $(OS).ld
 	$(LD) -T $(OS).ld $(OBJS) -o $(OS).elf
 	$(OBJCOPY) -O binary $(OS).elf $(OS).bin
+	$(OBJDUMP) -D $(OS).elf > $(OS).asm
 
 qemu: $(OS).bin
 	qemu-system-arm $(QEMU_FLAGS) -kernel $(OS).bin
@@ -35,3 +37,4 @@ qemu-gdb: $(OS).bin
 clean:
 	rm -f $(OBJS)
 	rm -f $(OS).elf $(OS).bin
+	rm -f $(OS).elf $(OS).bin $(OS).asm

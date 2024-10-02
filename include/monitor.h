@@ -21,15 +21,17 @@ typedef struct Command
 extern void monitor(void);
 
 /* monitor command function declarations */
+extern int mon_backtrace(int argc, char **argv);
 extern int mon_help(int argc, char **argv);
 extern int mon_hextee(int argc, char **argv);
 extern int mon_kerninfo(int argc, char **argv);
+extern int mon_status(int argc, char **argv);
 
 /* monitor commands declarations */
 static Command const commands[] = {
 	{
 		"help", 
-		"Displays this list of commands", 
+		"Displays a list of commands", 
 		(command_handler) mon_help
 	},
 	{
@@ -42,9 +44,20 @@ static Command const commands[] = {
 		"Displays information about the kernel", 
 		(command_handler) mon_kerninfo
 	},
+
+	{
+		"status",
+		"Displays current status of the system", 
+		(command_handler) mon_status
+	},
+
+	{
+		"backtrace",
+		"Backtrace ...", 
+		(command_handler) mon_backtrace
+	},
 };
 
-#define COMMAND_COUNT (sizeof(commands) / sizeof(commands[0]))
-
+#define COMMAND_COUNT 5
 
 #endif

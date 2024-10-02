@@ -12,6 +12,7 @@ mon_kerninfo(int argc, char **argv)
 	(void) argc;
 	(void) argv;
 
+	printf("\nLotus 0.6.0\n");
 	printf("Special kernel symbols:\n");
 	printf("  entry  %x (phys)\n", entry);
 	printf("  etext  %x (phys)\n", etext);
